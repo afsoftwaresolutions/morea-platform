@@ -4,7 +4,7 @@ import { AppController } from './app.controller.js';
 import { HealthController } from './health/health.controller.js';
 import { AppService } from './app.service.js';
 import { ProductsModule } from './products/products.module.js';
-import { PrismaModule } from './generated/prisma/prisma.module.js';
+import { PrismaModule } from './prisma/prisma.module.js';
 import { StorageModule } from './storage/storage.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
