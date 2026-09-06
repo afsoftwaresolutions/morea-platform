@@ -20,6 +20,8 @@ export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [cartModalOpen, setCartModalOpen] = useState(false);
+
   useEffect(() => {
     const loadProducts = async () => {
       try {
@@ -52,7 +54,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#f7f1e8] text-[#3f2f26]">
       <header className="flex items-center justify-between px-6 py-5 md:px-10">
-        
+
         <button
           onClick={() => setMenuOpen(true)}
           className="flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-[#eadccd]"
@@ -67,7 +69,11 @@ export default function Home() {
 
         <h1 className="text-2xl font-semibold tracking-[0.25em]">MOREA</h1>
 
-        <button className="text-2xl" aria-label="Carrito">
+        <button
+          onClick={() => setCartModalOpen(true)}
+          className="flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-[#eadccd]"
+          aria-label="Carrito"
+        >
           🛒
         </button>
       </header>
@@ -106,7 +112,6 @@ export default function Home() {
                 ['Productos', '#productos'],
                 ['Nosotros', '#nosotros'],
                 ['Contacto', '#contacto'],
-                ['Carrito', '#carrito'],
               ].map(([label, href]) => (
                 <a
                   key={label}
@@ -117,6 +122,16 @@ export default function Home() {
                   {label}
                 </a>
               ))}
+
+              <button
+                onClick={() => {
+                  setMenuOpen(false);
+                  setCartModalOpen(true);
+                }}
+                className="border-b border-[#eadccd] py-5 text-left text-lg text-[#4b382e] transition hover:pl-2 hover:text-[#a35f48]"
+              >
+                Carrito
+              </button>
             </nav>
 
             <div className="absolute bottom-8 left-8 right-8 border-t border-[#dfcdbd] pt-6">
@@ -350,6 +365,54 @@ export default function Home() {
           Morea by Tatiana López
         </p>
       </footer>
+
+      {cartModalOpen && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center px-6">
+          <div
+            className="absolute inset-0 bg-black/45 backdrop-blur-sm"
+            onClick={() => setCartModalOpen(false)}
+          />
+
+          <div className="relative w-full max-w-md rounded-[2rem] bg-[#fffaf3] p-8 text-center shadow-2xl">
+            <button
+              onClick={() => setCartModalOpen(false)}
+              className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-[#f2e4d4] text-xl text-[#6e4432] transition hover:bg-[#e5cdb8]"
+              aria-label="Cerrar"
+            >
+              ×
+            </button>
+
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#ead5c2] text-4xl">
+              🛒
+            </div>
+
+            <p className="mt-6 text-xs uppercase tracking-[0.3em] text-[#a35f48]">
+              Estamos trabajando en ello
+            </p>
+
+            <h2 className="mt-3 text-3xl font-semibold text-[#3f2f26]">
+              Próximamente
+            </h2>
+
+            <p className="mt-4 leading-7 text-[#6d5a50]">
+              Muy pronto podrás agregar tus productos favoritos al carrito y realizar
+              tu compra directamente en Morea.
+            </p>
+
+            <button
+              onClick={() => setCartModalOpen(false)}
+              className="mt-7 w-full rounded-full bg-[#9a5c43] py-3.5 font-medium text-white transition hover:bg-[#7e4936]"
+            >
+              Seguir explorando
+            </button>
+
+            <p className="mt-5 text-xs text-[#9a877c]">
+              Morea by Tatiana López
+            </p>
+          </div>
+        </div>
+      )}
+
     </main>
   );
 }
